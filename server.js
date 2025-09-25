@@ -14,6 +14,10 @@ const taskRoutes = require('./routes/tasks');
 app.use('/tasks', taskRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+const userRoutes = require('./routes/users');
+app.use('/users', userRoutes);
+
+
 db.initDb((err) => {
   if (err) console.error(err);
   else {

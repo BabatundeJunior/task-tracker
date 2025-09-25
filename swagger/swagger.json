@@ -3,7 +3,7 @@
   "info": {
     "title": "Task Tracker API",
     "version": "1.0.0",
-    "description": "This API allows users to create, view, update, and delete personal tasks."
+    "description": "This API allows users to create, view, update, and delete personal tasks and users."
   },
   "servers": [
     {
@@ -44,12 +44,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Task created successfully"
-          },
-          "400": {
-            "description": "Validation error"
-          }
+          "201": { "description": "Task created successfully" },
+          "400": { "description": "Validation error" }
         }
       }
     },
@@ -57,12 +53,7 @@
       "get": {
         "summary": "Get a task by ID",
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
@@ -73,20 +64,13 @@
               }
             }
           },
-          "404": {
-            "description": "Task not found"
-          }
+          "404": { "description": "Task not found" }
         }
       },
       "put": {
         "summary": "Update a task by ID",
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "required": true,
@@ -97,61 +81,133 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "Task updated successfully"
-          },
-          "400": {
-            "description": "Validation error"
-          },
-          "404": {
-            "description": "Task not found"
-          }
+          "204": { "description": "Task updated successfully" },
+          "400": { "description": "Validation error" },
+          "404": { "description": "Task not found" }
         }
       },
       "delete": {
         "summary": "Delete a task by ID",
         "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "204": {
-            "description": "Task deleted successfully"
-          },
-          "404": {
-            "description": "Task not found"
+          "204": { "description": "Task deleted successfully" },
+          "404": { "description": "Task not found" }
+        }
+      }
+    },
+
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
           }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User created successfully" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single user object",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "404": { "description": "User not found" }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "User updated successfully" },
+          "400": { "description": "Validation error" },
+          "404": { "description": "User not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by ID",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "User deleted successfully" },
+          "403": { "description": "Forbidden: Admins only" },
+          "404": { "description": "User not found" }
         }
       }
     }
   },
+
   "components": {
     "schemas": {
       "Task": {
         "type": "object",
         "required": ["title", "status", "dueDate"],
         "properties": {
-          "title": {
-            "type": "string",
-            "example": "Finish API"
-          },
-          "description": {
-            "type": "string",
-            "example": "Complete the API before Monday"
-          },
+          "title": { "type": "string", "example": "Finish API" },
+          "description": { "type": "string", "example": "Complete the API before Monday" },
           "status": {
             "type": "string",
             "enum": ["pending", "in-progress", "done"],
             "example": "pending"
           },
-          "dueDate": {
+          "dueDate": { "type": "string", "format": "date", "example": "2025-09-15" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": ["name", "email", "role"],
+        "properties": {
+          "name": { "type": "string", "example": "Peace Archibong" },
+          "email": { "type": "string", "format": "email", "example": "peace@example.com" },
+          "role": {
             "type": "string",
-            "format": "date",
-            "example": "2025-09-15"
+            "enum": ["user", "admin"],
+            "example": "admin"
           }
         }
       }
