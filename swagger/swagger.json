@@ -11,7 +11,7 @@
       "description": "Local server"
     },
     {
-      "url": "https://task-tracker-kl7r.onrender.com/api-docs",
+      "url": "https://task-tracker-kl7r.onrender.com",
       "description": "Live Render server"
     }
   ],
