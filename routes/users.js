@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { body, param } = require('express-validator');
 const controller = require('../controllers/user');
+const verifyToken = require('../middleware/verifyToken');
+
 
 // GET all users
 router.get('/', controller.getAllUsers);
@@ -12,6 +14,7 @@ router.get('/:id', [param('id').isMongoId().withMessage('Invalid user ID')], con
 // POST new user
 router.post(
   '/',
+  verifyToken,
   [
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Valid email is required'),
@@ -23,6 +26,7 @@ router.post(
 // PUT update user
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid user ID'),
     body('name').notEmpty().withMessage('Name is required'),
@@ -32,11 +36,10 @@ router.put(
   controller.updateUser
 );
 
-// DELETE user
-// const checkAdmin = require('../middleware/checkAdmin');
 
 router.delete(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid user ID')
   ],

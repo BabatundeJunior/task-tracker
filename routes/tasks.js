@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { body, param } = require('express-validator');
 const controller = require('../controllers/tasks');
+const verifyToken = require('../middleware/verifyToken');
 
 // GET all tasks
 router.get('/', controller.getAllTasks);
@@ -12,6 +13,7 @@ router.get('/:id', controller.getSingleTask);
 // POST new task
 router.post(
   '/',
+  verifyToken,
   [
     body('title').notEmpty().withMessage('Title is required'),
     body('status').isIn(['pending', 'in-progress', 'done']).withMessage('Invalid status'),
@@ -23,6 +25,7 @@ router.post(
 // PUT update task
 router.put(
   '/:id',
+  verifyToken,
   [
     param('id').isMongoId().withMessage('Invalid task ID'),
     body('title').notEmpty().withMessage('Title is required'),
@@ -35,6 +38,7 @@ router.put(
 // DELETE task
 router.delete(
   '/:id',
+  verifyToken,
   [param('id').isMongoId().withMessage('Invalid task ID')],
   controller.deleteTask
 );
