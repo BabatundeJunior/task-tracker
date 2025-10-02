@@ -46,7 +46,7 @@ PUT /tasks/{id} → Update a task (requires JWT)
 
 DELETE /tasks/{id} → Delete a task (requires JWT)
 
---Users Collection
+--Users Collection.
 
 GET /users → Get all users (requires JWT)
 
