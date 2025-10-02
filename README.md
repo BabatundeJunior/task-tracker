@@ -34,7 +34,7 @@ Copy the returned JWT token.
 Use the token in the Swagger “Authorize” popup to access protected routes.
 
  Endpoints
---Tasks
+--Tasks Collection
 
 GET /tasks → Get all tasks
 
@@ -46,7 +46,7 @@ PUT /tasks/{id} → Update a task (requires JWT)
 
 DELETE /tasks/{id} → Delete a task (requires JWT)
 
---Users
+--Users Collection
 
 GET /users → Get all users (requires JWT)
 
