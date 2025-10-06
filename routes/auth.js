@@ -4,7 +4,10 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 // Start login with Google
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', (req, res, next) => {
+  console.log('🔐 Starting Google OAuth...');
+  next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Callback after Google login
 router.get(
