@@ -6,7 +6,6 @@ This project is a Node.js + Express API with MongoDB that supports CRUD operatio
 Live Links
 
 Render Deployment: https://task-tracker-kl7r.onrender.com/api-docs
-Render to login to get JWT Token: https://task-tracker-kl7r.onrender.com/auth/google/callback
 
 GitHub Repository: 
 
@@ -27,7 +26,7 @@ MongoDB Atlas integration
 
 -- Authentication
 
-Visit https://task-tracker-kl7r.onrender.com/auth/google/callback to log in with Google.
+
 
 Copy the returned JWT token.
 
